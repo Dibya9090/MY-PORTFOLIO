@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - {{title}} -  Software Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-brand:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideInUp 1s ease-out 0.2s forwards;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: slideInUp 1s ease-out 0.4s forwards;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        /* Project Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            position: relative;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.2s; }
+        .project-card:nth-child(2) { animation-delay: 0.4s; }
+        .project-card:nth-child(3) { animation-delay: 0.6s; }
+        .project-card:nth-child(4) { animation-delay: 0.8s; }
+        .project-card:nth-child(5) { animation-delay: 1.0s; }
+        .project-card:nth-child(6) { animation-delay: 1.2s; }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.2)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .project-subtitle {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .link-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .link-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .link-primary:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        }
+
+        .link-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Featured Project */
+        .featured-project {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .featured-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .featured-info h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .featured-info p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .featured-highlights {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .featured-highlights li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .featured-highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .featured-mockup {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 300px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hex" width="30" height="30" patternUnits="userSpaceOnUse"><polygon points="15,5 25,12 25,22 15,29 5,22 5,12" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23hex)"/></svg>');
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            nav ul {
+                justify-content: center;
+            }
+
+            .hero {
+                margin-top: 120px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .featured-mockup {
+                height: 200px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/home" class="nav-brand">My Portfolio</a>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/skills" class="active">Skills</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Featured Projects</h1>
+            <p>Showcasing innovative  Software applications and iOS/macOS solutions I've built</p>
+        </div>
+    </section>
+
+    <section class="projects-section">
+        <div class="container">
+            <div class="featured-project">
+                <span class="featured-badge">Featured Project</span>
+                <div class="featured-content">
+                    <div class="featured-info">
+                        <h3>TaskFlow Pro</h3>
+                        <p>A comprehensive project management app built with  SoftwareUI that helps teams collaborate efficiently. Featured on the App Store and used by 50,000+ professionals worldwide.</p>
+                        <ul class="featured-highlights">
+                            <li>Real-time collaboration with team members</li>
+                            <li>Advanced task scheduling and notifications</li>
+                            <li>Beautiful data visualizations and reports</li>
+                            <li>Cross-platform sync with macOS version</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="#" class="project-link link-primary">View on App Store</a>
+                            <a href="#" class="project-link link-secondary">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="featured-mockup">
+                        📱
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">All Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        💰
+                    </div>
+                    <div class="project-content">
+                        <div class="project-subtitle">iOS App</div>
+                        <h3 class="project-title">BudgetWise</h3>
+                        <p class="project-description">Personal finance management app with AI-powered spending insights and budget recommendations.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag"> SoftwareUI</span>
+                            <span class="tech-tag">Core Data</span>
+                            <span class="tech-tag">Charts</span>
+                            <span class="tech-tag">CloudKit</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">25K+</div>
+                                <div class="stat-label">Downloads</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.8</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">15K</div>
+                                <div class="stat-label">Lines</div>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link link-primary">View App</a>
+                            <a href="#" class="project-link link-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        🏃‍♂️
+                    </div>
+                    <div class="project-content">
+                        <div class="project-subtitle">iOS App</div>
+                        <h3 class="project-title">FitTracker</h3>
+                        <p class="project-description">Comprehensive fitness tracking app with workout plans, progress analytics, and social features.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">UIKit</span>
+                            <span class="tech-tag">HealthKit</span>
+                            <span class="tech-tag">MapKit</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">40K+</div>
+                                <div class="stat-label">Downloads</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.7</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">22K</div>
+                                <div class="stat-label">Lines</div>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link link-primary">View App</a>
+                            <a href="#" class="project-link link-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        🍳
+                    </div>
+                    <div class="project-content">
+                        <div class="project-subtitle">iOS App</div>
+                        <h3 class="project-title">ChefMate</h3>
+                        <p class="project-description">Smart cooking companion with recipe suggestions, meal planning, and grocery list management.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag"> SoftwareUI</span>
+                            <span class="tech-tag">Core ML</span>
+                            <span class="tech-tag">Vision</span>
+                            <span class="tech-tag">Core Data</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">18K+</div>
+                                <div class="stat-label">Downloads</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.6</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">12K</div>
+                                <div class="stat-label">Lines</div>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link link-primary">View App</a>
+                            <a href="#" class="project-link link-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        💻
+                    </div>
+                    <div class="project-content">
+                        <div class="project-subtitle">macOS App</div>
+                        <h3 class="project-title">CodeSnippet Manager</h3>
+                        <p class="project-description">Productivity tool for developers to organize, search, and share code snippets across projects.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">AppKit</span>
+                            <span class="tech-tag"> Software</span>
+                            <span class="tech-tag">CloudKit</span>
+                            <span class="tech-tag">Syntax Highlighting</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">8K+</div>
+                                <div class="stat-label">Downloads</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.9</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">10K</div>
+                                <div class="stat-label">Lines</div>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link link-primary">Mac App Store</a>
+                            <a href="#" class="project-link link-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        📚
+                    </div>
+                    <div class="project-content">
+                        <div class="project-subtitle">iOS App</div>
+                        <h3 class="project-title">StudyBuddy</h3>
+                        <p class="project-description">Educational app for students with flashcards, study timers, and progress tracking features.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag"> SoftwareUI</span>
+                            <span class="tech-tag">Combine</span>
+                            <span class="tech-tag">Core Data</span>
+                            <span class="tech-tag">Notifications</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">32K+</div>
+                                <div class="stat-label">Downloads</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.8</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">18K</div>
+                                <div class="stat-label">Lines</div>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link link-primary">View App</a>
+                            <a href="#" class="project-link link-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        🎵
+                    </div>
+                    <div class="project-content">
+                        <div class="project-subtitle">iOS App</div>
+                        <h3 class="project-title">SoundScape</h3>
+                        <p class="project-description">Ambient sound mixer app for focus and relaxation with custom soundscapes and timers.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">UIKit</span>
+                            <span class="tech-tag">AVFoundation</span>
+                            <span class="tech-tag">Core Audio</span>
+                            <span class="tech-tag">StoreKit</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">45K+</div>
+                                <div class="stat-label">Downloads</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.7</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">16K</div>
+                                <div class="stat-label">Lines</div>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link link-primary">View App</a>
+                            <a href="#" class="project-link link-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 {{title}}. Specialized in  Software development and iOS/macOS applications.</p>
+        <p>Contact: <a href="mailto:hello@{{title|lower}}.dev" style="color: #74b9ff;">hello@{{title|lower}}.dev</a></p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card, .featured-project').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add hover effects to project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
